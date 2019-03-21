@@ -5,26 +5,20 @@ const history = createHistory();
 message.config({
     duration: 1,
 });
-
 axios.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('token');
-// axios.defaults.headers.common['uuid'] = window.sessionStorage.getItem('uuid');
 axios.defaults.headers.common['username'] = window.sessionStorage.getItem('username');
 export default store => next => action => {
     const {dispatch, getState} = store;
-    /*如果dispatch来的是一个function，此处不做处理，直接进入下一级*/
     if (typeof action === 'function') {
         action(dispatch, getState);
         return;
     }
-    /*解析action*/
     const {
         promise,
         types,
         afterSuccess,
         ...rest
     } = action;
-
-    /*没有promise，证明不是想要发送ajax请求的，就直接进入下一步啦！*/
     if (!action.promise) {
         return next(action);
     }
@@ -72,8 +66,6 @@ export default store => next => action => {
             // console.log('操作失败：权限不足')
             // this.props.history.push('/cms/login')
         }else{
-            console.log('error--------------------------')
-        console.log(error)
         message.info('系统错误,请稍后再试');
         next({
             ...rest,

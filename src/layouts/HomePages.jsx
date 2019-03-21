@@ -10,12 +10,11 @@ import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
 import homePages from "routes/homePages.jsx";
 import adminPages from "routes/adminPages.jsx";
+import userPages from "routes/userPages.jsx";
 import centerPages from "routes/centerPages.jsx";
 import appStyle from "assets/jss/material-dashboard-pro-react/layouts/dashboardStyle.jsx";
-import image from "assets/img/sidebar-2.jpg";
+import image from "assets/img/sidebar-1.jpg";
 import logo from "assets/img/shineyuelogo.png";
-
-const role = window.sessionStorage.getItem('role');
 const adminRoutes = (
   <Switch>
     {adminPages.map((prop, key) => {
@@ -61,20 +60,31 @@ const centerRoutes = (
     })}
   </Switch>
 );
+const userRoutes = (
+  <Switch>
+    {userPages.map((prop, key) => {
+      if (prop.redirect)
+        return <Redirect from={prop.path} to={prop.pathTo} key={key} />;
+      if (prop.collapse)
+        return prop.views.map((prop, key) => {
+          return (
+            <Route path={prop.path} component={prop.component} key={key} />
+          );
+        });
+      return <Route path={prop.path} component={prop.component} key={key} />;
+    })}
+  </Switch>
+)
 let switchRoutes = homeRoutes
 let pageRoutes = homePages
 let timer2
-
 var ps;
-
 class HomePages extends React.Component {
   componentWillMount() {
-      // document.removeEventListener("keydown",this.handleEenterKey);
       timer2=window.setTimeout(this.refresh,500);
       const userSession = window.sessionStorage.getItem('token');
-      console.log(userSession)
       if(userSession===null||userSession===undefined||userSession===''){
-          this.props.history.push("/cms/login");
+          this.props.history.push("/sym/login");
       }else {
       }
       const role = window.sessionStorage.getItem('role');
@@ -82,13 +92,13 @@ class HomePages extends React.Component {
         pageRoutes=adminPages
         switchRoutes=adminRoutes
       }
-      // if(role==='ROLE_ADMIN'){
-      //   pageRoutes=homePages
-      //   switchRoutes=homeRoutes
-      // }
-      else{
-        pageRoutes=homePages
-        switchRoutes=homeRoutes
+      if(role==='ROLE_ADMIN'){
+           pageRoutes=homePages
+           switchRoutes=homeRoutes
+        }
+      else if(role==='ROLE_USER'){
+        pageRoutes=userPages
+        switchRoutes=userRoutes
       }
   }
   state = {
@@ -96,25 +106,18 @@ class HomePages extends React.Component {
     miniActive: false
   };
   handleEnterKey = (e) => {
-    // console.log(e.keyCode)
     if(e.keyCode === 13){
         this.handleClick()
     }
 }
   refresh = ()=> {
-    // console.log('remark')
     if(document.getElementById("layui-layer2")===null){
-      // console.log('没有layui-layer2')
     }else{
       if(window.sessionStorage.getItem('customerFlag')===true||window.sessionStorage.getItem('customerFlag')==='true'){
-        // console.log('客服显示layui-layer2')
         document.getElementById("layui-layer2").style.display='block'
-        // document.getElementById("layui-layer1").style.display='block'
         clearInterval(this.timerID);
       }else{
-        // console.log('不是客服不显示layui-layer2')
         document.getElementById("layui-layer2").style.display='none'
-        // document.getElementById("layui-layer1").style.display='none'
         clearInterval(this.timerID);
       } 
   } 
@@ -126,12 +129,10 @@ class HomePages extends React.Component {
     return this.props.location.pathname !== "/maps/full-screen-maps";
   }
   componentDidMount() {
-    // console.log('主页添加定时器')
     this.timerID = setInterval(
       () => this.refresh(),
       500
-    );
-     
+    );     
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(this.refs.mainPanel, {
         suppressScrollX: true,
@@ -168,11 +169,10 @@ class HomePages extends React.Component {
           navigator.platform.indexOf("Win") > -1
       });
     return (
-      <div className={classes.wrapper}>
-      
+      <div className={classes.wrapper}>     
         <Sidebar
           routes={pageRoutes}
-          logoText={"神玥客服"}
+          logoText={"报表系统"}
           logo={logo}
           image={image}
           handleDrawerToggle={this.handleDrawerToggle}
@@ -182,7 +182,6 @@ class HomePages extends React.Component {
           miniActive={this.state.miniActive}
           {...rest}
         />
-
         <div className={mainPanel} ref="mainPanel">
           <Header
             sidebarMinimize={this.sidebarMinimize.bind(this)}
@@ -201,7 +200,6 @@ class HomePages extends React.Component {
           )}
           {this.getRoute() ? <Footer fluid /> : null}
         </div>
-
         {/* <div style={{background:'#666666',width:'100%',height:'100%',zIndex:8888,position:'relative'}}> */}
             {/* <iframe style={{width:'50%',height:'50%',zIndex:9999,position:'relative',top:-document.body.clientHeight}} src="http://www.runoob.com">
                 <p>您的浏览器不支持  iframe 标签。</p>
@@ -212,9 +210,7 @@ class HomePages extends React.Component {
     );
   }
 }
-
 HomePages.propTypes = {
   classes: PropTypes.object.isRequired
 };
-
 export default withStyles(appStyle)(HomePages);

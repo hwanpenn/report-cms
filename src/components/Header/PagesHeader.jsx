@@ -2,7 +2,6 @@ import React from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import AppBar from "@material-ui/core/AppBar";
@@ -13,18 +12,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-
 // @material-ui/icons
 // import Dashboard from "@material-ui/icons/Dashboard";
 import Menu from "@material-ui/icons/Menu";
-
 // core components
 import Button from "components/CustomButtons/Button";
-
 import pagesRoutes from "routes/loginPages.jsx";
-
 import pagesHeaderStyle from "assets/jss/material-dashboard-pro-react/components/pagesHeaderStyle.jsx";
-
 class PagesHeader extends React.Component {
   constructor(props) {
     super(props);
@@ -91,14 +85,7 @@ class PagesHeader extends React.Component {
     );
     return (
       <AppBar position="static" className={classes.appBar + appBarClasses}>
-        <Toolbar className={classes.container}>
-          <Hidden smDown implementation="css">
-            <div className={classes.flex}>
-              <Button href="#" className={classes.title} color="transparent">
-                智能客服后台管理系统
-              </Button>
-            </div>
-          </Hidden>
+        <Toolbar className={classes.container}>        
           <Hidden mdUp>
             <div className={classes.flex}>
               <Button href="#" className={classes.title} color="transparent">
@@ -106,9 +93,7 @@ class PagesHeader extends React.Component {
               </Button>
             </div>
           </Hidden>
-          <Hidden smDown implementation="css">
-            {list}
-          </Hidden>
+     
           <Hidden mdUp>
             <Button
               className={classes.sidebarButton}
@@ -143,10 +128,8 @@ class PagesHeader extends React.Component {
     );
   }
 }
-
 PagesHeader.propTypes = {
   classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"])
 };
-
 export default withStyles(pagesHeaderStyle)(PagesHeader);

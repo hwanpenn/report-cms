@@ -1,8 +1,42 @@
 @import '~antd/dist/antd.css';
-
+.echartcenter{
+	margin: 0 auto;
+}
 .App {
     text-align: center;
 }
 .tableBackground{
     background: #b9d3e8;
   }
+.ant-card-head-title{
+	line-height: 40px;
+	padding: 0px;
+}
+.ant-card-head{
+	min-height: 40px;
+}
+.ant-tabs{
+	margin: 0 auto;
+}
+.echarttitle{
+	font-size: 24px;
+	line-height: 40px;
+	width: 90%;
+	margin: 0 auto;
+	border-bottom: 1px solid #40a9ff;
+}
+.Sidebar-collapseActive-37{
+	background-color:rgba(150,150,150,0.6) !important;
+}
+.Sidebar-blue-50{
+	background: #00acc1 !important;
+}
+.Card-card-1479{
+	border-radius: 10px;
+}
+.ant-menu-item > a{
+	display: inline-block !important;
+}
+.ant-tree.ant-tree-directory{
+	margin-top: 20px;
+}

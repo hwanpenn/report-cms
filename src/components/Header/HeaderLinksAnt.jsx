@@ -2,8 +2,6 @@ import React from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { Manager, Target, Popper } from "react-popper";
-
-// @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
@@ -11,30 +9,19 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
 import Hidden from "@material-ui/core/Hidden";
-
 // @material-ui/icons
 // import Person from "@material-ui/icons/Person";
-import Notifications from "@material-ui/icons/Notifications";
+import NotificationsActive from "@material-ui/icons/NotificationsActive";
 // import Dashboard from "@material-ui/icons/Dashboard";
 // import Search from "@material-ui/icons/Search";
-
 // core components
 // import CustomInput from "components/CustomInput/CustomInput.jsx";
 import UIButton from "components/CustomButtons/Button.jsx";
 import Grid from '@material-ui/core/Grid';
-
 import headerLinksStyle from "assets/jss/material-dashboard-pro-react/components/headerLinksStyle";
-import { Avatar } from 'antd';
-
+import { Avatar,Popover } from 'antd';
 let lastName = '空'
-// let realName = window.sessionStorage.getItem('realName')
-// if(realName===''||realName===null||realName===undefined){
-// }else{
-//  lastName =  realName.substring(realName.length-1)
-// }
-
 const UserList = [lastName];
-
 const colorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 class HeaderLinks extends React.Component {
     constructor(props) {
@@ -46,13 +33,11 @@ class HeaderLinks extends React.Component {
         };
     }
     componentWillMount(){
-        // const realName = window.sessionStorage.getItem('realName');
-        // let lastName = '空'
         let realName = window.sessionStorage.getItem('realName')
         if(realName===''||realName===null||realName===undefined){
         
         }else{
-         lastName =  realName.substring(realName.length-1)
+         lastName =  realName.substring(0,1)
         }
         
         this.setState({
@@ -78,14 +63,6 @@ class HeaderLinks extends React.Component {
   render() {
     const { classes, rtlActive } = this.props;
     const { open } = this.state;
-    // const searchButton =
-    //   classes.top +
-    //   " " +
-    //   classes.searchButton +
-    //   " " +
-    //   classNames({
-    //     [classes.searchRTL]: rtlActive
-    //   });
     const dropdownItem =
       classes.dropdownItem +
       " " +
@@ -105,34 +82,6 @@ class HeaderLinks extends React.Component {
                   {/*<Paper className={classes.paper}>xs=6</Paper>*/}
                   <Manager className={managerClasses}>
                       <Target>
-                          <UIButton
-                              color="transparent"
-                              justIcon
-                              aria-label="Notifications"
-                              aria-owns={open ? "menu-list" : null}
-                              aria-haspopup="true"
-                              onClick={this.handleClick}
-                              className={rtlActive ? classes.buttonLinkRTL : classes.buttonLink}
-                              muiClasses={{
-                                  label: rtlActive ? classes.labelRTL : ""
-                              }}
-                          >
-                              <Notifications
-                                  className={
-                                      classes.headerLinksSvg +
-                                      " " +
-                                      (rtlActive
-                                          ? classes.links + " " + classes.linksRTL
-                                          : classes.links)
-                                  }
-                              />
-                              {/* <span className={classes.notifications}>5</span> */}
-                              <Hidden mdUp>
-                <span onClick={this.handleClick} className={classes.linkText}>
-                  {rtlActive ? "إعلام" : "Notification"}
-                </span>
-                              </Hidden>
-                          </UIButton>
                       </Target>
                       <Popper
                           placement="bottom-start"
@@ -194,27 +143,25 @@ class HeaderLinks extends React.Component {
                       </Popper>
                   </Manager>
               </Grid>
-              <Grid style={{textAlign:'right',marginLeft:-10}} item xs={6}>
+              <Grid style={{textAlign:'right',marginLeft:30}} item xs={6}>
                   <div>
-                      <Avatar style={{ backgroundColor: this.state.color, verticalAlign: 'middle' ,marginRight:15,marginTop:5}} size="large">
+                  <Popover content={(<div>{'用户名:'+window.sessionStorage.getItem('realName')}</div>)}>
+                      <Avatar style={{ backgroundColor: "#55acee", verticalAlign: 'middle' ,marginRight:15,marginTop:5}} size="large">
                           {this.state.realName}
                       </Avatar>
+                      </Popover>
                       {/*<Button size="small" style={{ marginLeft: 16, verticalAlign: 'middle' }} onClick={this.changeUser}>*/}
                           {/*Change*/}
                       {/*</Button>*/}
                   </div>
               </Grid>
-
           </Grid>
-
       </div>
     );
   }
 }
-
 HeaderLinks.propTypes = {
   classes: PropTypes.object.isRequired,
   rtlActive: PropTypes.bool
 };
-
 export default withStyles(headerLinksStyle)(HeaderLinks);

@@ -3,34 +3,24 @@ import React, { Component } from 'react';
 import 'App.css';
 import {appReduxChange, appReduxTest} from "actions/app";
 import {connect} from 'react-redux'
-
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
-
+import { createHashHistory } from "history";
+import {  HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import indexRoutes from "routes/index.jsx";
-
 import "assets/scss/material-dashboard-pro-react.css?v=1.2.0";
-
-const hist = createBrowserHistory();
-
+const hist = createHashHistory();
 class App extends Component {
-
     componentWillMount(){
         // const s = document.createElement('script');
         // s.type = 'text/javascript';
         // s.src = '/static/js/chat1.js';
-        // document.body.appendChild(s);
-        
-        
-    }
-    
+        // document.body.appendChild(s);       
+    }    
     componentDidMount(){
-       
+    	
     }
-
     render() {
         return (
-            <Router history={hist}>
+            <HashRouter history={hist}>
                 <Switch>
                     {indexRoutes.map((prop, key) => {
                         if (prop.collapse) {
@@ -50,7 +40,7 @@ class App extends Component {
                         );
                     })}
                 </Switch>
-            </Router>
+            </HashRouter>
         );
     }
 }

@@ -1,143 +1,66 @@
-
-
-import tablesRobotMng from "views/Tables/tablesRobotMng.jsx";
-import tablesChatMng from "views/Tables/tablesChatMng.jsx";
-import tablesML from "views/Tables/tablesML.jsx";
-import tablesDialog from "views/Tables/tablesDialog.jsx";
-import tablesKnowladgeMng from "views/Tables/tablesKnowladgeMng.jsx";
-import tablesKillGroupMng from "views/Tables/tablesKillGroupMng.jsx";
-import tablesSecretKey from "views/Tables/tablesSecretKey.jsx";
-import tablesArticleMng from "views/Tables/tablesArticleMng.jsx";
-import tablesKilGroupHidden from "views/Tables/tablesKilGroupHidden.jsx";
-import tablesComplaintMng from "views/Tables/tablesComplaintMng.jsx";
-import tablesMyCompany from "views/Tables/tablesMyCompany.jsx";
-import Apps from "@material-ui/icons/Apps";
-import ContentPaste from "@material-ui/icons/ContentPaste";
-import LockOpen from "@material-ui/icons/LockOpen";
-import Timeline from "@material-ui/icons/Timeline";
-import WidgetsIcon from "@material-ui/icons/Widgets";
+import usersMng from "views/Tables/usersMng.jsx";
+import passwordMng from "views/Tables/passwordMng.jsx";
+import tablesIndex from "views/Tables/tablesIndex.jsx";
+import reportMng from "views/Tables/reportMng.jsx";
+import reportDetail from "views/Tables/reportDetail.jsx";
+import reportVersion from "views/Tables/reportVersion.jsx";
+import SupervisorAccount from "@material-ui/icons/SupervisorAccount";
+import Lock from "@material-ui/icons/Lock";
+import DateRange from "@material-ui/icons/DateRange";
+import Assignment from "@material-ui/icons/Assignment";
 
 const dashRoutes = [
     {
         collapse: true,
-        path: "/cms/home/tables",
-        name: "机器人",
-        state: "openTables1",
-        icon: Apps,
-        views: [
-            {
-            path: "/cms/home/tables/chatmng",
-            name: "聊天窗管理",
-            mini: "N",
-            component: tablesChatMng
-            },
-            {
-            path: "/cms/home/tables/robotmng",
-            name: "机器人管理",
-            mini: "B",
-            component: tablesRobotMng
-            },
-            {
-            path: "/cms/home/tables/ml",
-            name: "机器学习",
-            mini: "P",
-            component: tablesML
-            },
-        ]
-    },
-    {
-        collapse: true,
-        path: "/cms/home/tables",
-        name: "知识库",
+        path: "/sym/home/tables",
+        name: "用户管理",
         state: "openTables2",
-        icon: ContentPaste,
+        icon: SupervisorAccount,
         views: [
             {
-                path: "/cms/home/tables/knowladgemng",
-                name: "知识库管理",
+                path: "/sym/home/tables/usermng",
+                name: "用户管理",
                 mini: "RF",
-                component: tablesKnowladgeMng
-            },
-            // {
-            //     path: "/cms/home/tables/articlemng",
-            //     name: "文章详情",
-            //     mini: "RF",
-            //     status: "hidden",
-            //     component: tablesArticleMng
-            // },
-        ]
-    },
-    {
-        collapse: true,
-        path: "/cms/home/tables",
-        name: "统计查询",
-        state: "openTables5",
-        icon: LockOpen,
-        views: [
-            {
-                path: "/cms/home/tables/dialog",
-                name: "对话详情",
-                mini: "GS",
-                component: tablesDialog
-                },
-        ]
-    },
-    {
-        collapse: true,
-        path: "/cms/home/tables",
-        name: "客服管理",
-        state: "openTables3",
-        icon: WidgetsIcon,
-        views: [
-            {
-                path: "/cms/home/tables/killgroup",
-                name: "技能组管理",
-                mini: "RT",
-                component: tablesKillGroupMng
-            },
-            {
-                path: "/cms/home/tables/groupdetail",
-                name: "技能组详情",
-                mini: "RT",
-                status: "hidden",
-                component: tablesKilGroupHidden
-            },
-            {
-                path: "/cms/home/tables/mycompany",
-                name: "人员管理",
-                mini: "RT",
-                component: tablesMyCompany,
-                // unUseRole:'ROLE_USER',
-                role: "ROLE_USER",
-            },
-            // {
-            //     path: "/cms/home/tables/secretkey",
-            //     name: "密钥管理",
-            //     mini: "RT",
-            //     component: tablesSecretKey
-            // },
-        ]
-    },
-    {
-        collapse: true,
-        path: "/cms/home/tables",
-        name: "投诉建议",
-        state: "openTables4",
-        icon: Timeline,
-        views: [
-            {
-                path: "/cms/home/tables/complaint",
-                name: "投诉建议管理",
-                mini: "RT",
-                component: tablesComplaintMng
+                component: usersMng
             }
         ]
     },
     {
+        collapse: true,
+        path: "/sym/home/tables",
+        name: "报表管理",
+        state: "openTables5",
+        icon: DateRange,
+        views: [
+            {
+                path: "/sym/home/tables/report",
+                name: "报表分类",
+                mini: "GS",
+                component: reportMng
+            },
+            {
+            	path: "/sym/home/tables/detail",
+            	name: "报表详情",
+            	mini: "GS",
+            	status:'hidden',
+            	component: reportDetail
+            },
+            {
+            	path: "/sym/home/tables/version",
+            	name: "所有版本",
+            	mini: "GS",
+            	status:'hidden',
+            	component: reportVersion
+            },
+            
+         ]
+    },
+    {
         redirect: true,
-        path: "/cms/home",
-        pathTo: "/cms/home/tables/chatmng",
+        path: "/sym/home",
+        pathTo: "/sym/home/tables/usermng",
         name: "Register"
     },
 ];
+
 export default dashRoutes;

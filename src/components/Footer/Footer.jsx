@@ -1,14 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // import List from "@material-ui/core/List";
 // import ListItem from "@material-ui/core/ListItem";
-
 import footerStyle from "assets/jss/material-dashboard-pro-react/components/footerStyle";
-
 function Footer({ ...props }) {
   const { classes, fluid, white, rtlActive } = props;
   var container = cx({
@@ -53,13 +50,13 @@ function Footer({ ...props }) {
           {/*</List>*/}
         </div>
         <p className={classes.right}>
-          &copy; {1900 + new Date().getYear()}{" "}
+          &copy; {1900 + new Date().getYear()}
           <a href="https://www.shineyue.com/" className={anchor}>
             {rtlActive ? "توقيت الإبداعية" : "shineyue"}
           </a>
           {rtlActive
             ? ", مصنوعة مع الحب لشبكة الإنترنت أفضل"
-            : ", service content manage system"}
+            : ", report manage system"}
         </p>
       </div>
     </footer>

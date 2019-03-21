@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-
 import customLinearProgressStyle from "assets/jss/material-dashboard-pro-react/components/customLinearProgressStyle.jsx";
 
 function CustomLinearProgress({ ...props }) {
@@ -19,11 +17,9 @@ function CustomLinearProgress({ ...props }) {
     />
   );
 }
-
 CustomLinearProgress.defaultProps = {
   color: "gray"
 };
-
 CustomLinearProgress.propTypes = {
   classes: PropTypes.object.isRequired,
   color: PropTypes.oneOf([

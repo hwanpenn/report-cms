@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Snack from "@material-ui/core/Snackbar";

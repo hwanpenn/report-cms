@@ -1,8 +1,15 @@
-
 {
   "proxy": {
-    "/api/*": {
-      "target": "http://127.0.0.1:7001",
+    "/sreport/*": {
+      "target": "http://192.168.2.103:8089",
+      "changeOrigin": true
+    },
+    "/organization/*": {
+      "target": "http://192.168.2.103:8089",
+      "changeOrigin": true
+    },
+    "/login*": {
+      "target": "http://192.168.2.103:8089",
       "changeOrigin": true
     }
   }

@@ -45,7 +45,7 @@ class LoginPage extends React.Component {
       <div className={classes.content}>
         <div className={classes.container}>
           <GridContainer justify="center">
-            <GridItem xs={12} sm={6} md={4}>
+            <GridItem xs={11} sm={5} md={4}>
               <form>
                 <Card login className={classes[this.state.cardAnimaton]}>
                   <CardHeader

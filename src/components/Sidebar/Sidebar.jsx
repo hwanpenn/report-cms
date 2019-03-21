@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import PerfectScrollbar from "perfect-scrollbar";
 import { NavLink } from "react-router-dom";
 import cx from "classnames";
-
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 import Drawer from "@material-ui/core/Drawer";
@@ -14,14 +13,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Hidden from "@material-ui/core/Hidden";
 import Collapse from "@material-ui/core/Collapse";
-
 // core components
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.jsx";
-import {updatePasswordDataAdmin } from "actions/tablesAdmin";
 import avatarSuper from "assets/img/faces/marc.jpg";
-import avatarAdmin from "assets/img/faces/avatar.jpg";
+import avatarAdmin from "assets/img/faces/admin.jpg";
 import { Button, Modal, Form, Input, Radio } from 'antd';
 import { message } from 'antd';
 import {connect} from "react-redux";
@@ -30,54 +26,8 @@ message.config({
     duration: 1,
 });
 const FormItem = Form.Item;
-
 var ps;
-const CollectionCreateForm = Form.create()(
-  class extends React.Component {
-    render() {
-      const { visible, onCancel, onCreate, form } = this.props;
-      const { getFieldDecorator } = form;
-      return (
-        <Modal
-          visible={visible}
-          title="修改密码"
-          okText="确定" cancelText='取消'
-          onCancel={onCancel}
-          onOk={onCreate}
-        >
-          <Form layout="vertical">
-            <FormItem label="初始密码">
-              {getFieldDecorator('oldPassword', {
-                rules: [{ required: true, message: '请输入初始密码!' }],
-              })(
-                <Input type="password" />
-              )}
-            </FormItem>
-            <FormItem label="新密码">
-              {getFieldDecorator('newPassword', {
-                rules: [{ required: true, message: '请输入新密码!' }],
-              })(
-                <Input type="password" />
-              )}
-            </FormItem>
-            <FormItem label="确认密码">
-              {getFieldDecorator('password', {
-                rules: [{ required: true, message: '请再次输入密码!' }],
-              })(
-                <Input type="password" />
-              )}
-            </FormItem>
-          </Form>
-        </Modal>
-      );
-    }
-  }
-);
 
-// We've created this component so we can have a ref to the wrapper of the links that appears in our sidebar.
-// This was necessary so that we could initialize PerfectScrollbar on the links.
-// There might be something with the Hidden component from material-ui, and we didn't have access to
-// the links, and couldn't initialize the plugin.
 class SidebarWrapper extends React.Component {
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -113,7 +63,6 @@ class Sidebar extends React.Component {
       openComponents: this.activeRoute("/components"),
       openForms: this.activeRoute("/forms"),
       openTables: this.activeRoute("/tables"),
-      // openMaps: this.activeRoute("/maps"),
       openPages: this.activeRoute("-page"),
       miniActive: true
     };
@@ -128,71 +77,30 @@ class Sidebar extends React.Component {
     st[collapse] = !this.state[collapse];
     this.setState(st);
   }
-  openCollapse1(collapse) {
-    var st1 = {};
-    st1[collapse] = !this.state[collapse];
-    this.setState(st1);
-  }
-    handleModify=()=>{
-      this.showModal()
-    }
     handleLogout=()=>{
         if(document.getElementById("layui-layer1")!==null){
           document.getElementById("layui-layer1").style.display='none'
         }
         if(document.getElementById("layui-layer2")!==null){
           document.getElementById("layui-layer2").style.display='none'
-        }
-        
+        }        
         window.sessionStorage.setItem('token','')
-        this.props.history.push("/cms/login");
+        this.props.history.push("/sym/login");
     }
     state = {
       visible: false,
     };
-  
     showModal = () => {
       this.setState({ visible: true });
     }
-  
-    handleCancel = () => {
-      this.setState({ visible: false });
-    }
-  
-    handleCreate = () => {
-      const form = this.formRef.props.form;
-      form.validateFields((err, values) => {
-        if (err) {
-          return;
-        }
-        const uPattern = /^[a-zA-Z0-9_-]{4,16}$/;
-        if(uPattern.test(values.newPassword)===false){
-          message.info('密码需要4位以上的字母或数字');
-        }else{
-          if(values.newPassword===values.password){
-            values.userId=window.sessionStorage.getItem('userId')
-            this.props.updatePasswordDataAdmin(values)
-            form.resetFields();
-            this.setState({ visible: false });
-            this.handleLogout()
-          }else{
-            message.info('两次密码输入不一样');
-          }
-        }
-      });
-    }
-  
-    saveFormRef = (formRef) => {
-      this.formRef = formRef;
-    }
     handleClick = (event) =>{
         axios.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('token');
-        axios.post('/cs/api/exit'
+        axios.post('/exit'
         ).then((response) => {
-                console.log(response)
+                
             }
         ) .catch(function (error) {
-            console.log(error);
+           
         });
     }
   render() {
@@ -252,7 +160,7 @@ class Sidebar extends React.Component {
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
-          <img src={window.sessionStorage.getItem('role')==='ROLE_SUPERADMIN'?avatarSuper:avatarAdmin} className={classes.avatarImg} alt="..." />
+          <img src={window.sessionStorage.getItem('role')==='ROLE_SUPERADMIN'?avatarSuper:avatarAdmin} className={classes.avatarImg} alt="avatar" />
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
@@ -262,42 +170,13 @@ class Sidebar extends React.Component {
               onClick={() => this.openCollapse("openAvatar")}
             >
               <ListItemText
-                primary={window.sessionStorage.getItem('role')==='ROLE_SUPERADMIN'?"超级管理员":"管理员"+"--"+ window.sessionStorage.getItem('realName')}
-                secondary={
-                  <b
-                    className={
-                      caret +
-                      " " +
-                      classes.userCaret +
-                      " " +
-                      (this.state.openAvatar ? classes.caretActive : "")
-                    }
-                  />
-                }
+                primary={window.sessionStorage.getItem('identify')}
                 disableTypography={true}
                 className={itemText + " " + classes.userItemText}
               />
             </NavLink>
             <Collapse in={this.state.openAvatar} unmountOnExit>
               <List className={classes.list + " " + classes.collapseList}>
-                <ListItem className={classes.collapseItem}>
-                  <NavLink
-                      onClick={()=>{this.handleModify()}}
-                    to="#"
-                    className={
-                      classes.itemLink + " " + classes.userCollapseLinks
-                    }
-                  >
-                    <span style={{marginLeft:40}} className={collapseItemMini}>
-                      {rtlActive ? "و" : "--"}
-                    </span>
-                    <ListItemText
-                      primary={rtlActive ? "إعدادات" : "修改密码"}
-                      disableTypography={true}
-                      className={collapseItemText}
-                    />
-                  </NavLink>
-                </ListItem>
                 <ListItem className={classes.collapseItem}>
                   <NavLink
                       onClick={()=>{this.handleLogout()}}
@@ -556,7 +435,7 @@ class Sidebar extends React.Component {
             <SidebarWrapper
               className={sidebarWrapper}
               user={user}
-              headerLinks={<HeaderLinks rtlActive={rtlActive} />}
+             
               links={links}
             />
             {image !== undefined ? (
@@ -592,12 +471,6 @@ class Sidebar extends React.Component {
             ) : null}
           </Drawer>
         </Hidden>
-        <CollectionCreateForm
-          wrappedComponentRef={this.saveFormRef}
-          visible={this.state.visible}
-          onCancel={this.handleCancel}
-          onCreate={this.handleCreate}
-        />
       </div>
     );
   }
@@ -632,12 +505,5 @@ const mapStateToProps = (state) => {
       tablesAdmin: state.tablesAdmin,
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return{
-    updatePasswordDataAdmin: (params) => {
-          dispatch(updatePasswordDataAdmin(params))
-      }
-  }
-}
 
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(sidebarStyle)(Sidebar));
+export default connect(mapStateToProps)(withStyles(sidebarStyle)(Sidebar));

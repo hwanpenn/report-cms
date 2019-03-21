@@ -9,11 +9,9 @@ import Clear from "@material-ui/icons/Clear";
 import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-
 import customInputStyle from "assets/jss/material-dashboard-pro-react/components/customInputStyle.jsx";
 // import {appUsername,appPassword } from "actions/app";
 // import {connect} from "react-redux";
-
 function CustomInput({ ...props }) {
   const {
     classes,
@@ -101,7 +99,6 @@ function CustomInput({ ...props }) {
     </FormControl>
   );
 }
-
 CustomInput.propTypes = {
   classes: PropTypes.object.isRequired,
   labelText: PropTypes.node,
@@ -114,5 +111,4 @@ CustomInput.propTypes = {
   success: PropTypes.bool,
   white: PropTypes.bool
 };
-
 export default withStyles(customInputStyle)(CustomInput);

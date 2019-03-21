@@ -9,9 +9,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Hidden from "@material-ui/core/Hidden";
 
 // material-ui icons
-import Menu from "@material-ui/icons/Menu";
-import MoreVert from "@material-ui/icons/MoreVert";
-import ViewList from "@material-ui/icons/ViewList";
+import Notifications from "@material-ui/icons/Notifications";
+import Add from "@material-ui/icons/Add";
+import Remove from "@material-ui/icons/Remove";
 
 // core components
 // import HeaderLinks from "./HeaderLinks";
@@ -58,19 +58,19 @@ function Header({ ...props }) {
               <Button
                 justIcon
                 round
-                color="white"
+                color="twitter"
                 onClick={props.sidebarMinimize}
               >
-                <ViewList className={classes.sidebarMiniIcon} />
+                <Add className={classes.sidebarMiniIcon} />
               </Button>
             ) : (
               <Button
                 justIcon
                 round
-                color="white"
+                color="twitter"
                 onClick={props.sidebarMinimize}
               >
-                <MoreVert className={classes.sidebarMiniIcon} />
+               { <Remove className={classes.sidebarMiniIcon} />}
               </Button>
             )}
           </div>
@@ -92,7 +92,7 @@ function Header({ ...props }) {
             aria-label="open drawer"
             onClick={props.handleDrawerToggle}
           >
-            <Menu />
+            <Notifications />
           </Button>
         </Hidden>
       </Toolbar>

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-
 import './App.css'
-
 class VCode extends Component {
     constructor(props) {
         super(props)
@@ -10,7 +8,6 @@ class VCode extends Component {
             refresh: false
         }
     }
-
     initState(){
         return {
             data: this.getRandom(109,48,4),
@@ -19,7 +16,6 @@ class VCode extends Component {
             color: [this.getRandom(100,200,3),this.getRandom(100,200,4),this.getRandom(100,200,3),this.getRandom(100,200,3)]
         }
     }
-
     getRandom(max, min, num) {
         const asciiNum = ~~(Math.random()*(max-min+1)+min)
         if(!Boolean(num)){
@@ -38,15 +34,13 @@ class VCode extends Component {
         }
         return arr
     }
-
     canvas() {
         const { getRandom } = this
         const canvas = document.getElementById('bgi')
         let ctx = canvas.getContext('2d')
         canvas.height = canvas.height
-        // ctx.clearRect(0, 0, canvas.width(), canvas.height())
         ctx.strokeStyle = `rgb(${this.getRandom(100,10,3).toString()})`
-        for( let i = 0; i< 7; i++ ) {
+        for( let i = 0; i< 3; i++ ) {
             ctx.lineTo(getRandom(200,0),getRandom(200,10))
             ctx.moveTo(getRandom(200,0),getRandom(200,0))
             ctx.stroke();
@@ -55,7 +49,6 @@ class VCode extends Component {
     componentDidMount() {
         this.canvas()
     }
-
     render() {
         const { rotate, fz, color } = this.state
         return (
